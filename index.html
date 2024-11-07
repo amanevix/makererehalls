@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Makerere University Halls</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 90vh;
+      width: 100%;
+    }
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      font-family: Arial, sans-serif;
+      margin: 10px 0;
+    }
+    header img {
+      width: 40px;
+      height: auto;
+    }
+    .metadata-link {
+      margin-left: 20px;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="Logo.png" alt="Makerere University Logo" />
+    <h1>Makerere University Halls</h1>
+    <a href="metadata.html" class="metadata-link">Metadata</a>
+  </header>
+  
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([0.334222, 32.571289], 16);
+
+    L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=mA6vfjqCDlEQwIkU813N', {
+      tileSize: 512,
+      zoomOffset: -1,
+      minZoom: 1,
+      attribution: '© MapTiler © OpenStreetMap contributors',
+      crossOrigin: true
+    }).addTo(map);
+
+    const halls = [
+      { name: "Africa Hall", lat: 0.337982014, lng: 32.5686587, image: "Africa.jpg" },
+      { name: "Livingstone Hall", lat: 0.3390653, lng: 32.567972, image: "Livingstone.jpg" },
+      { name: "Nkrumah Hall", lat: 0.33626, lng: 32.5692193, image: "Nkrumah.jpg" },
+      { name: "Mary Stuart Hall", lat: 0.33095, lng: 32.56658, image: "Marystuart.jpg" },
+      { name: "Mitchell Hall", lat: 0.333860, lng: 32.570482, image: "Mitchell.jpg" },
+      { name: "University Hall", lat: 0.33322, lng: 32.57254, image: "University.jpg" },
+      { name: "Lumumba Hall", lat: 0.331793, lng: 32.565850, image: "Lumumba.jpg" },
+      { name: "Complex Hall", lat: 0.33001, lng: 32.56991, image: "complex_hall.jpg" }
+    ];
+
+    halls.forEach(hall => {
+      L.marker([hall.lat, hall.lng])
+        .addTo(map)
+        .bindPopup(`
+          <div>
+            <img src="${hall.image}" alt="${hall.name}" style="width: 100%; height: auto; border-radius: 5px;" />
+            <strong>${hall.name}</strong>
+          </div>
+        `);
+    });
+  </script>
+
+</body>
+</html>
